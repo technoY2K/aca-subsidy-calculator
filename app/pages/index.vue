@@ -29,7 +29,12 @@
         />
 
         <!-- action steps -->
-        <ActionSteps v-if="results" />
+        <ActionSteps
+          v-if="results"
+          :annual-increase="results.annualIncrease"
+          :monthly-increase="results.monthlyIncrease"
+          :state="formState"
+        />
       </div>
     </UContainer>
   </div>
@@ -40,9 +45,11 @@ import type { CalculatorInputs, CalculatorResults } from '~/types/calculator'
 import { calculateResults } from '~/utils/calculations'
 
 const results = ref<CalculatorResults | null>(null)
+const formState = ref<string>('')
 
 function handleCalculate(inputs: CalculatorInputs) {
   try {
+    formState.value = inputs.state
     results.value = calculateResults(inputs)
     
     // scroll to results after render
