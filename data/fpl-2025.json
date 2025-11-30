@@ -1,0 +1,16 @@
+{
+  "_comment": "Federal Poverty Level (FPL) data for 2025. Source: https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines",
+  "_format": "householdSize -> annual FPL amount in dollars",
+  "householdSize": {
+    "1": 15030,
+    "2": 20360,
+    "3": 25690,
+    "4": 31020,
+    "5": 36350,
+    "6": 41680,
+    "7": 47010,
+    "8": 52340
+  },
+  "_note": "For households larger than 8, add $5,330 for each additional person"
+}
+

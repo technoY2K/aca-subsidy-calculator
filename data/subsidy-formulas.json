@@ -1,0 +1,26 @@
+{
+  "_comment": "Subsidy calculation formulas - percentage caps by FPL level",
+  "_source": "IRS documentation for ACA premium tax credits",
+  "enhanced": {
+    "_comment": "Enhanced ACA subsidies (current, expiring Dec 31, 2025)",
+    "_note": "FPL percentage -> maximum percentage of income spent on premium",
+    "150": 0.0,
+    "200": 0.02,
+    "250": 0.04,
+    "300": 0.06,
+    "400": 0.085
+  },
+  "original": {
+    "_comment": "Original ACA subsidies (post-expiration, if no Congressional action)",
+    "_note": "FPL percentage -> maximum percentage of income spent on premium. No subsidy above 400% FPL.",
+    "100": 0.02,
+    "133": 0.03,
+    "150": 0.04,
+    "200": 0.063,
+    "250": 0.065,
+    "300": 0.073,
+    "400": 0.095
+  },
+  "_calculation_note": "Subsidy = Benchmark Premium - (Income × percentage cap). If result is negative, subsidy = 0."
+}
+

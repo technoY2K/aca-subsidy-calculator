@@ -1,0 +1,26 @@
+{
+  "_comment": "Benchmark premiums by state and age for 2026 (projected from 2025 CMS data + 5% inflation estimate)",
+  "_format": "state code -> age -> monthly premium in dollars",
+  "_source": "CMS Public Use Files (PUF) - https://www.cms.gov/cciio/resources/data-resources/marketplace-puf",
+  "_note": "Replace with actual 2026 data when available. Ages are typically grouped in brackets (21, 27, 30, 40, 50, 60, etc.)",
+  "_example_structure": {
+    "AL": {
+      "21": 450.50,
+      "27": 520.30,
+      "30": 580.20,
+      "40": 650.80,
+      "50": 720.40,
+      "60": 850.60
+    },
+    "AK": {
+      "21": 520.00,
+      "27": 600.00,
+      "30": 670.00,
+      "40": 750.00,
+      "50": 830.00,
+      "60": 980.00
+    }
+  },
+  "_placeholder": "Replace this entire object with actual state/age premium data. All 50 states + DC required."
+}
+
