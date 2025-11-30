@@ -75,8 +75,5 @@ aca-cliff-calculator/
 ## Development Notes
 
 - Calculations are performed client-side for fast, responsive results
-- Form validation ensures all required fields are filled
-- Results are displayed with clear visual hierarchy
-- Cost increases are highlighted in red for emphasis
 - Action steps provide next steps for users
 
