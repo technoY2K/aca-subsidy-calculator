@@ -20,7 +20,11 @@
         </div>
 
         <!-- calculator form -->
-        <CalculatorForm @calculate="handleCalculate" />
+        <CalculatorForm 
+          :show-reset="!!results" 
+          @calculate="handleCalculate"
+          @reset="handleReset"
+        />
 
         <!-- results -->
         <CalculatorResults
@@ -35,6 +39,9 @@
           :monthly-increase="results.monthlyIncrease"
           :state="formState"
         />
+
+        <!-- methodology -->
+        <MethodologySection />
       </div>
     </UContainer>
   </div>
@@ -63,6 +70,11 @@ function handleCalculate(inputs: CalculatorInputs) {
     console.error('Calculation error:', error)
     // TODO: show error message to user
   }
+}
+
+function handleReset() {
+  results.value = null
+  formState.value = ''
 }
 </script>
 

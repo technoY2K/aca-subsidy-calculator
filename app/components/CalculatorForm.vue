@@ -1,7 +1,18 @@
 <template>
   <UCard class="border-2 border-gray-700">
     <template #header>
-      <h2 class="text-2xl font-bold text-white">Calculate Your Premium Increase</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-white">Calculate Your Premium Increase</h2>
+        <UButton
+          v-if="props.showReset"
+          color="error"
+          variant="outline"
+          size="sm"
+          @click="handleReset"
+        >
+          Reset
+        </UButton>
+      </div>
     </template>
 
     <div class="space-y-6">
@@ -87,8 +98,13 @@
 <script setup lang="ts">
 import type { CalculatorInputs } from '~/types/calculator'
 
+const props = defineProps<{
+  showReset?: boolean
+}>()
+
 const emit = defineEmits<{
   calculate: [inputs: CalculatorInputs]
+  reset: []
 }>()
 
 const formData = reactive<CalculatorInputs>({
@@ -183,6 +199,20 @@ function handleCalculate() {
       ages: actualAges.value
     })
   }
+}
+
+function handleReset() {
+  // reset form data
+  formData.state = ''
+  formData.ages = [0, 0, 0, 0]
+  formData.annualIncome = 0
+  formData.currentMonthlyPremium = undefined
+  formattedIncome.value = ''
+  numberOfPeople.value = undefined
+  dynamicAges.value = []
+  
+  // emit reset event to parent
+  emit('reset')
 }
 </script>
 
