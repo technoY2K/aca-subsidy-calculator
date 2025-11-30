@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@': fileURLToPath(new URL('./app', import.meta.url)),
   },
   nitro: {
-    preset: 'cloudflare_pages',
+    preset: 'cloudflare_module',
     cloudflare: {
       deployConfig: true,
       nodeCompat: true
