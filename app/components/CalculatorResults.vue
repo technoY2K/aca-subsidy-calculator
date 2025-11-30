@@ -13,6 +13,11 @@
         <p class="text-2xl font-semibold text-white">
           ${{ formatCurrency(results.currentSubsidy) }}
         </p>
+        <div class="bg-green-900/30 border border-green-600 rounded-lg p-3 mt-2">
+          <p class="text-sm text-gray-200">
+            This is what the federal government covers toward your premium each month.
+          </p>
+        </div>
       </div>
 
       <div class="space-y-2">
@@ -22,6 +27,11 @@
         <p class="text-2xl font-semibold text-white">
           ${{ formatCurrency(results.currentMonthlyPremium) }}
         </p>
+        <div class="bg-yellow-900/30 border border-yellow-600 rounded-lg p-3 mt-2">
+          <p class="text-sm text-gray-200">
+            This is what you actually pay monthly after the subsidy.
+          </p>
+        </div>
       </div>
 
       <!-- expired premium -->

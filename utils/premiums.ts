@@ -3,41 +3,60 @@ import premiumData from '~/data/benchmark-premiums.json'
 
 /**
  * get benchmark premium for a given state and age
- * uses age brackets (finds closest age bracket)
+ * uses base age brackets with state cost factors and linear interpolation
  */
 export function getBenchmarkPremium(state: string, age: number): number {
   const data = premiumData as BenchmarkPremiums
-  const stateData = data[state]
   
-  if (!stateData) {
-    console.warn(`No premium data found for state: ${state}`)
+  // get base premiums by age bracket
+  const basePremiums = data.age_brackets
+  const stateFactor = data.state_cost_factors[state] || 1.0
+  
+  // get age brackets sorted
+  const ages = Object.keys(basePremiums).map(Number).sort((a, b) => a - b)
+  
+  if (ages.length === 0) {
     return 0
   }
   
-  // find closest age bracket
-  const ages = Object.keys(stateData).map(Number).sort((a, b) => a - b)
+  const minAge = ages[0]!
+  const maxAge = ages[ages.length - 1]!
   
-  // if age is below minimum, use minimum
-  if (age < ages[0]) {
-    return stateData[ages[0].toString()] || 0
+  // if age is below minimum, use minimum bracket
+  if (age <= minAge) {
+    const basePremium = basePremiums[minAge.toString()] || 0
+    return Math.round(basePremium * stateFactor)
   }
   
-  // if age is above maximum, use maximum
-  if (age > ages[ages.length - 1]) {
-    return stateData[ages[ages.length - 1].toString()] || 0
+  // if age is above maximum, use maximum bracket
+  if (age >= maxAge) {
+    const basePremium = basePremiums[maxAge.toString()] || 0
+    return Math.round(basePremium * stateFactor)
   }
   
-  // find closest bracket
-  let closestAge = ages[0]
-  for (const bracketAge of ages) {
-    if (bracketAge <= age) {
-      closestAge = bracketAge
-    } else {
+  // find the two brackets to interpolate between
+  let lowerAge = minAge
+  let upperAge = maxAge
+  
+  for (let i = 0; i < ages.length - 1; i++) {
+    const currentAge = ages[i]!
+    const nextAge = ages[i + 1]!
+    
+    if (age >= currentAge && age <= nextAge) {
+      lowerAge = currentAge
+      upperAge = nextAge
       break
     }
   }
   
-  return stateData[closestAge.toString()] || 0
+  // linear interpolation
+  const lowerPremium = basePremiums[lowerAge.toString()] || 0
+  const upperPremium = basePremiums[upperAge.toString()] || 0
+  const ratio = (age - lowerAge) / (upperAge - lowerAge)
+  const basePremium = lowerPremium + (upperPremium - lowerPremium) * ratio
+  
+  // apply state cost factor and round
+  return Math.round(basePremium * stateFactor)
 }
 
 /**
@@ -52,11 +71,14 @@ export function getHouseholdBenchmarkPremium(state: string, ages: number[]): num
   
   // for single person, use their age
   if (sortedAges.length === 1) {
-    return getBenchmarkPremium(state, sortedAges[0])
+    const age = sortedAges[0]
+    if (age === undefined) return 0
+    return getBenchmarkPremium(state, age)
   }
   
   // for multiple people, use second-oldest person's age
   const secondOldestAge = sortedAges[1]
+  if (secondOldestAge === undefined) return 0
   return getBenchmarkPremium(state, secondOldestAge)
 }
 

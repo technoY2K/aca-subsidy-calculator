@@ -7,8 +7,11 @@ export interface FPLData {
 }
 
 export interface BenchmarkPremiums {
-  [state: string]: {
-    [age: string]: number // age -> monthly premium
+  age_brackets: {
+    [age: string]: number // age bracket -> base monthly premium
+  }
+  state_cost_factors: {
+    [state: string]: number // state -> cost adjustment factor
   }
 }
 

@@ -110,9 +110,6 @@ const peopleCountOptions = [
   { label: '5 people', value: 5 },
   { label: '6 people', value: 6 },
   { label: '7 people', value: 7 },
-  { label: '8 people', value: 8 },
-  { label: '9 people', value: 9 },
-  { label: '10 people', value: 10 },
 ]
 
 const states = [
