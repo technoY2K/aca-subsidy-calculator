@@ -45,7 +45,7 @@
 
         <!-- footer attribution -->
         <div class="pt-8">
-          <UDivider />
+          <USeparator />
           <div class="text-center mt-6">
             <ULink 
               to="https://www.kevia.me" 
