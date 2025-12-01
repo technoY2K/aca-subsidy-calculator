@@ -18,10 +18,11 @@
               <UButton
                 to="https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines"
                 target="_blank"
-                color="neutral"
+                color="success"
                 variant="ghost"
                 size="xs"
                 external
+                class="text-emerald-400 hover:text-emerald-300"
               >
                 2025 Federal Poverty Guidelines (ASPE)
               </UButton>
@@ -31,10 +32,11 @@
               <UButton
                 to="https://www.cms.gov/cciio/resources/data-resources/marketplace-puf"
                 target="_blank"
-                color="neutral"
+                color="success"
                 variant="ghost"
                 size="xs"
                 external
+                class="text-emerald-400 hover:text-emerald-300"
               >
                 2025 CMS Marketplace Public Use Files
               </UButton>
@@ -45,10 +47,11 @@
               <UButton
                 to="https://www.irs.gov/affordable-care-act/individuals-and-families/the-premium-tax-credit"
                 target="_blank"
-                color="neutral"
+                color="success"
                 variant="ghost"
                 size="xs"
                 external
+                class="text-emerald-400 hover:text-emerald-300"
               >
                 IRS Premium Tax Credit documentation
               </UButton>
@@ -79,10 +82,11 @@
               <UButton
                 to="https://www.healthcare.gov/"
                 target="_blank"
-                color="neutral"
+                color="success"
                 variant="ghost"
                 size="xs"
                 external
+                class="text-emerald-400 hover:text-emerald-300"
               >
                 healthcare.gov
               </UButton>

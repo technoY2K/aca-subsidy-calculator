@@ -1,3 +1,29 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* make radio group labels white for better visibility on dark background */
+.bg-gray-900 label,
+.bg-gray-900 [role="radiogroup"] label {
+  color: white !important;
+}
+
+/* make links and buttons in action steps white, but allow emerald/green links */
+.bg-gray-800 a:not(.text-emerald-400):not(.text-emerald-300),
+.bg-gray-800 button:not(.text-emerald-400):not(.text-emerald-300),
+.bg-gray-800 .text-gray-300 {
+  color: white !important;
+}
+
+/* ensure emerald buttons keep their green color */
+.bg-gray-800 button.text-emerald-400,
+.bg-gray-800 button.text-emerald-300,
+.bg-gray-800 button.text-emerald-400 *,
+.bg-gray-800 button.text-emerald-300 * {
+  color: rgb(52, 211, 153) !important; /* emerald-400 */
+}
+
+.bg-gray-800 button.text-emerald-400:hover,
+.bg-gray-800 button.text-emerald-400:hover * {
+  color: rgb(110, 231, 183) !important; /* emerald-300 */
+}
+

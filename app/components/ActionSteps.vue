@@ -62,15 +62,16 @@
         <h3 class="text-xl font-semibold text-white mb-3">
           2. Explore Alternatives Now
         </h3>
-        <ul class="space-y-2 text-gray-300">
+        <ul class="space-y-2 text-white">
           <li>
             • <UButton
               to="https://www.medicaid.gov/state-overviews/index.html"
               target="_blank"
-              color="neutral"
+              color="success"
               variant="ghost"
               size="sm"
               external
+              class="text-emerald-400 hover:text-emerald-300"
             >
               Check Medicaid eligibility
             </UButton>
@@ -80,10 +81,11 @@
             • <UButton
               to="https://findahealthcenter.hrsa.gov/"
               target="_blank"
-              color="neutral"
+              color="success"
               variant="ghost"
               size="sm"
               external
+              class="text-emerald-400 hover:text-emerald-300"
             >
               Find community health centers
             </UButton>
