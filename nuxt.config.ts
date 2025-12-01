@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui'],
   css: ['@/assets/css/main.css'],
   colorMode: {
-    preference: 'dark',
-    fallback: 'dark'
+    preference: 'light',
+    fallback: 'light'
   },
   alias: {
     '~': fileURLToPath(new URL('./', import.meta.url)),
