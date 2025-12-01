@@ -1,5 +1,5 @@
 <template>
-  <UCard class="border-2 border-gray-700">
+  <UCard class="bg-gray-900 border-2 border-gray-700">
     <template #header>
       <h2 class="text-2xl font-bold text-white">What You Can Do</h2>
     </template>

@@ -1,5 +1,5 @@
 <template>
-  <UCard data-results class="border-2 border-gray-700">
+  <UCard data-results class="bg-gray-900 border-2 border-gray-700">
     <template #header>
       <h2 class="text-2xl font-bold text-white">Your Results</h2>
     </template>

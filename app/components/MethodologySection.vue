@@ -1,5 +1,5 @@
 <template>
-  <UCard class="border-2 border-gray-700">
+  <UCard class="bg-gray-900 border-2 border-gray-700">
     <details class="group">
       <summary class="cursor-pointer text-xl font-semibold text-white mb-4 list-none">
         <div class="flex items-center justify-between">
