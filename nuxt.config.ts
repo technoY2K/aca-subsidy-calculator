@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/ui'],
   css: ['@/assets/css/main.css'],
+  colorMode: {
+    preference: 'dark',
+    fallback: 'dark'
+  },
   alias: {
     '~': fileURLToPath(new URL('./', import.meta.url)),
     '@': fileURLToPath(new URL('./app', import.meta.url)),
