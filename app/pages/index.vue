@@ -42,6 +42,20 @@
 
         <!-- methodology -->
         <MethodologySection />
+
+        <!-- footer attribution -->
+        <div class="pt-8">
+          <UDivider />
+          <div class="text-center mt-6">
+            <ULink 
+              to="https://www.kevia.me" 
+              external
+              class="text-gray-400 text-sm hover:text-gray-300 transition-colors"
+            >
+              Built By technoY2K
+            </ULink>
+          </div>
+        </div>
       </div>
     </UContainer>
   </div>
