@@ -80,6 +80,7 @@
         <UInput
           :model-value="formattedIncome"
           type="text"
+          inputmode="numeric"
           placeholder="$65,000"
           prefix="$"
           :ui="{ base: 'text-base' }"
