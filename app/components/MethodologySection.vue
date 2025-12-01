@@ -61,6 +61,7 @@
           <h4 class="font-semibold text-white mb-2">How We Calculate</h4>
           <ul class="space-y-1 text-sm">
             <li>• Benchmark premiums use age brackets (21, 27, 30, 40, 50, 60, 64) with linear interpolation for ages between brackets</li>
+            <li>• Age ranges* are converted to midpoint values for calculations (e.g., 21-29 range uses age 25)</li>
             <li>• State cost factors adjust premiums based on regional healthcare costs</li>
             <li>• Subsidies calculated using income-based percentage caps (enhanced ACA: 0-8.5%, original ACA: 2-9.5%)</li>
             <li>• For households with multiple people, we use the second-oldest person's age (ACA rule)</li>

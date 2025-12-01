@@ -17,7 +17,10 @@
 
     <div class="space-y-6">
       <!-- state selection -->
-      <UFormField label="State" name="state" required>
+      <UFormField name="state" required>
+        <template #label>
+          <span class="text-base font-semibold text-white">State</span>
+        </template>
         <USelect
           v-model="formData.state"
           :items="states"
@@ -26,7 +29,10 @@
       </UFormField>
 
       <!-- number of people selection -->
-      <UFormField label="How many people are on the plan?" name="householdSize" required>
+      <UFormField name="householdSize" required>
+        <template #label>
+          <span class="text-base font-semibold text-white">How many people are on the plan?</span>
+        </template>
         <USelect
           v-model="numberOfPeople"
           :items="peopleCountOptions"
@@ -34,30 +40,43 @@
         />
       </UFormField>
 
-      <!-- ages input based on number of people -->
-      <UFormField v-if="numberOfPeople && numberOfPeople > 0" label="Age(s)" name="ages" required>
-        <div class="space-y-3 mt-3">
+      <!-- age ranges based on number of people -->
+      <UFormField v-if="numberOfPeople && numberOfPeople > 0" name="ages" required>
+        <template #label>
+          <span class="text-base font-semibold text-white">Age(s)*</span>
+        </template>
+        <div class="space-y-8 mt-4">
           <div
-            v-for="(age, index) in dynamicAges"
+            v-for="(ageRange, index) in dynamicAgeRanges"
             :key="index"
-            class="space-y-1"
+            class="space-y-2"
           >
             <label class="text-sm font-medium text-gray-300 block">
-              Person {{ index + 1 }}
+              Member {{ index + 1 }}
             </label>
-            <UInput
-              v-model.number="dynamicAges[index]"
-              type="number"
-              :placeholder="`Age: e.g., ${index === 0 ? '35' : index === 1 ? '32' : '8'}`"
-              min="0"
-              max="64"
-            />
+            <div class="grid grid-cols-2 gap-2">
+              <URadioGroup
+                v-model="dynamicAgeRanges[index]"
+                :items="ageRangeOptionsColumn1"
+                orientation="vertical"
+                variant="table"
+              />
+              <URadioGroup
+                v-model="dynamicAgeRanges[index]"
+                :items="ageRangeOptionsColumn2"
+                orientation="vertical"
+                variant="table"
+              />
+            </div>
           </div>
         </div>
       </UFormField>
 
       <!-- annual income -->
-      <UFormField :label="`Annual Household Income (for ${householdSize} ${householdSize === 1 ? 'person' : 'people'})`" name="income" required>
+      <UFormField name="income" required>
+        <template #label>
+          <span class="text-base font-semibold text-white">Annual Household Income (for {{ householdSize }} {{ householdSize === 1 ? 'person' : 'people' }})</span>
+        </template>
         <UInput
           :model-value="formattedIncome"
           type="text"
@@ -68,7 +87,10 @@
       </UFormField>
 
       <!-- optional current premium -->
-      <UFormField label="Current Monthly Premium (Optional)" name="currentPremium">
+      <UFormField name="currentPremium">
+        <template #label>
+          <span class="text-base font-semibold text-white">Current Monthly Premium (Optional)</span>
+        </template>
         <UInput
           v-model.number="formData.currentMonthlyPremium"
           type="number"
@@ -116,7 +138,31 @@ const formData = reactive<CalculatorInputs>({
 
 const formattedIncome = ref('')
 const numberOfPeople = ref<number | undefined>(undefined)
-const dynamicAges = ref<number[]>([])
+const dynamicAgeRanges = ref<string[]>([])
+
+// age range options with midpoint values for calculations
+const ageRangeOptions = [
+  { label: 'Under 21', value: 'under-21' },
+  { label: '21-29', value: '21-29' },
+  { label: '30-39', value: '30-39' },
+  { label: '40-49', value: '40-49' },
+  { label: '50-59', value: '50-59' },
+  { label: '60-64', value: '60-64' },
+]
+
+// split into two columns for 2-column layout
+const ageRangeOptionsColumn1 = ageRangeOptions.slice(0, 3)
+const ageRangeOptionsColumn2 = ageRangeOptions.slice(3)
+
+// map age ranges to midpoint ages
+const ageRangeToMidpoint: Record<string, number> = {
+  'under-21': 20, // midpoint of 0-20 range
+  '21-29': 25,    // midpoint of 21-29
+  '30-39': 35,    // midpoint of 30-39
+  '40-49': 45,    // midpoint of 40-49
+  '50-59': 55,    // midpoint of 50-59
+  '60-64': 62,    // midpoint of 60-64
+}
 
 const peopleCountOptions = [
   { label: '1 person', value: 1 },
@@ -136,14 +182,17 @@ const states = [
   'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC'
 ].map(state => ({ label: state, value: state }))
 
-// compute household size based on filled ages
+// compute household size based on selected age ranges
 const householdSize = computed(() => {
-  return dynamicAges.value.filter(age => (age ?? 0) > 0).length
+  return dynamicAgeRanges.value.filter(range => range && range !== '').length
 })
 
-// get actual ages array (filter out zeros)
+// convert age ranges to midpoint ages for calculations
 const actualAges = computed(() => {
-  return dynamicAges.value.filter((age): age is number => (age ?? 0) > 0)
+  return dynamicAgeRanges.value
+    .filter((range): range is string => Boolean(range && range !== ''))
+    .map(range => ageRangeToMidpoint[range] || 0)
+    .filter(age => age > 0)
 })
 
 const isFormValid = computed(() => {
@@ -151,15 +200,14 @@ const isFormValid = computed(() => {
     return false
   }
   
-  // validate that we have the right number of ages and they're all valid
-  if (dynamicAges.value.length !== numberOfPeople.value) {
+  // validate that we have the right number of age ranges and they're all selected
+  if (dynamicAgeRanges.value.length !== numberOfPeople.value) {
     return false
   }
   
-  // all ages must be between 1 and 64
-  return dynamicAges.value.every(age => {
-    const ageValue = age ?? 0
-    return ageValue > 0 && ageValue <= 64
+  // all age ranges must be selected and valid
+  return dynamicAgeRanges.value.every(range => {
+    return range && range !== '' && ageRangeToMidpoint[range] !== undefined
   })
 })
 
@@ -181,13 +229,13 @@ function handleIncomeInput(event: Event) {
   formattedIncome.value = numValue.toLocaleString('en-US')
 }
 
-// watch number of people and update dynamic ages array
+// watch number of people and update dynamic age ranges array
 watch(numberOfPeople, (newCount) => {
   if (newCount && typeof newCount === 'number' && newCount > 0) {
     // resize array to match number of people
-    dynamicAges.value = Array(newCount).fill(0)
+    dynamicAgeRanges.value = Array(newCount).fill('')
   } else {
-    dynamicAges.value = []
+    dynamicAgeRanges.value = []
   }
 }, { immediate: true })
 
@@ -209,7 +257,7 @@ function handleReset() {
   formData.currentMonthlyPremium = undefined
   formattedIncome.value = ''
   numberOfPeople.value = undefined
-  dynamicAges.value = []
+  dynamicAgeRanges.value = []
   
   // emit reset event to parent
   emit('reset')
