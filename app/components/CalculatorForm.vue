@@ -82,6 +82,7 @@
           type="text"
           placeholder="$65,000"
           prefix="$"
+          :ui="{ base: 'text-base' }"
           @input="handleIncomeInput"
         />
       </UFormField>
@@ -97,6 +98,7 @@
           placeholder="$0"
           min="0"
           prefix="$"
+          :ui="{ base: 'text-base' }"
         />
         <template #hint>
           For comparison/validation purposes
