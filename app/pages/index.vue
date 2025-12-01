@@ -45,7 +45,7 @@
 
         <!-- footer attribution -->
         <div class="pt-8">
-          <USeparator />
+          <USeparator icon="i-simple-icons-cloudflare"/>
           <div class="text-center mt-6">
             <ULink 
               to="https://www.kevia.me" 
