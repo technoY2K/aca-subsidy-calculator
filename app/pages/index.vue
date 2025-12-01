@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 overflow-x-hidden w-full">
     <UContainer>
       <div class="max-w-4xl mx-auto space-y-8">
         <!-- header -->
